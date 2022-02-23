@@ -1,0 +1,26 @@
+# dct-sw-test-encrypt
+# s3-encrypt-deny.png
+
+{
+    "Version": "2012-10-17",
+    "Id": "PutObjPolicy",
+    "Statement": [
+        {
+            "Sid": "DenyUnEncryptedObjectUploads",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::dct-sw-test-encrypt/*",
+            "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption": "true"
+                }
+            }
+        }
+    ]
+}
+
+## Command without encryption: aws s3 cp YOUR-FILE-NAME s3://YOUR-BUCKET-NAME
+## Command with encryption: aws s3api put-object --body YOUR-FILE-NAME --key YOUR-FILE-NAME --bucket YOUR-BUCKET-NAME --server-side-encryption AES256
+
+## ## Command with encryption filled: aws s3api put-object --body s3-encrypt-deny.png --key s3-encrypt-deny.png --bucket dct-sw-test-encrypt --server-side-encryption AES256

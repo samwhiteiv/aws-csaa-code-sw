@@ -1,0 +1,62 @@
+# Account A Role Trust Policy (Edit Trust Policy)
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::809911935526:user/dct-john"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+}
+
+# https://809911935526.signin.aws.amazon.com/console
+
+# Account A Role Permissions (inline)
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:ListAllMyBuckets"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::*"
+            ]
+        },
+        {
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::dct-cloudstorage"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::dct-cloudstorage/*"
+        }
+    ]
+}
+
+# Account B User Permissions (inline)
+
+{
+    "Version": "2012-10-17",
+    "Statement": {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "arn:aws:iam::290738313620:role/DCT-CrossAccountS3"
+    }
+  }
+
+  
